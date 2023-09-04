@@ -1,5 +1,4 @@
 const { check } = require("express-validator");
-const slugify = require("slugify");
 const validatorMiddleware = require("../../middlewares/validatorMiddleware");
 const Category = require("../../models/categoryModel");
 const SubCategory = require("../../models/subCategoryModel");
@@ -7,22 +6,32 @@ const Brand = require("../../models/brandModel");
 const ApiError = require("../apiError");
 
 exports.createProductValidator = [
-  check("title")
+  check("title_en")
+    .notEmpty()
+    .withMessage("product english name required")
     .isLength({ min: 3 })
-    .withMessage("must be at least 3 chars")
+    .withMessage("product english name must be at least 3 chars"),
+
+  check("title_ar")
+    .isLength({ min: 3 })
+    .withMessage("product arabic name must be at least 3 chars")
     .notEmpty()
-    .withMessage("Product required")
-    .custom((val, { req }) => {
-      req.body.slug = slugify(val);
-      return true;
-    }),
-  check("description")
+    .withMessage("product arabic name required"),
+
+  check("description_en")
     .notEmpty()
-    .withMessage("Product description is required")
+    .withMessage("Product english description is required")
     .isLength({ min: 20 })
-    .withMessage("Too short description")
+    .withMessage("Too short Product english description")
     .isLength({ max: 2000 })
-    .withMessage("Too long description"),
+    .withMessage("Too long Product english description"),
+  check("description_ar")
+    .notEmpty()
+    .withMessage("Product arabic description is required")
+    .isLength({ min: 20 })
+    .withMessage("Too short Product arabic description")
+    .isLength({ max: 2000 })
+    .withMessage("Too long Product arabic description"),
   check("quantity")
     .notEmpty()
     .withMessage("Product quantity is required")
@@ -156,11 +165,7 @@ exports.updateProductValidator = [
     .isLength({ min: 3 })
     .withMessage("must be at least 3 chars")
     .notEmpty()
-    .withMessage("Product required")
-    .custom((val, { req }) => {
-      req.body.slug = slugify(val);
-      return true;
-    }),
+    .withMessage("Product required"),
   check("description")
     .optional()
     .isLength({ min: 20 })

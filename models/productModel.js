@@ -2,19 +2,27 @@ const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema(
   {
-    title: {
+    title_ar: {
       type: String,
       required: true,
       trim: true,
       minlength: [3, "Too short product title"],
       maxlength: [100, "too Shot product title"],
     },
-    slug: {
+    title_en: {
       type: String,
       required: true,
-      lowercase: true,
+      trim: true,
+      minlength: [3, "Too short product title"],
+      maxlength: [100, "too Shot product title"],
     },
-    description: {
+    description_ar: {
+      type: String,
+      required: [true, "Product description is required"],
+      trim: true,
+      minlength: [20, "Too short Product description"],
+    },
+    description_en: {
       type: String,
       required: [true, "Product description is required"],
       trim: true,

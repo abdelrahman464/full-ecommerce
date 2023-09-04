@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const { check, body } = require("express-validator");
-const slugify = require("slugify");
+
 const User = require("../../models/userModel");
 const validatorMiddleware = require("../../middlewares/validatorMiddleware");
 
@@ -18,10 +18,7 @@ exports.createUserValidator = [
     .withMessage("too short User name")
     .isLength({ max: 100 })
     .withMessage("too long User name")
-    .custom((val, { req }) => {
-      req.body.slug = slugify(val);
-      return true;
-    }),
+   ,
 
   check("email")
     .notEmpty()
@@ -66,10 +63,7 @@ exports.updateUserValidator = [
   check("id").isMongoId().withMessage("Invalid User id format"),
   body("name")
     .optional()
-    .custom((val, { req }) => {
-      req.body.slug = slugify(val);
-      return true;
-    }),
+    ,
   check("email")
     .optional()
     .isEmail()
@@ -129,10 +123,7 @@ exports.changeUserPasswordValidator = [
 exports.updateLoggedUserValidator = [
   body("name")
     .optional()
-    .custom((val, { req }) => {
-      req.body.slug = slugify(val);
-      return true;
-    }),
+    ,
   check("email")
     .optional()
     .isEmail()

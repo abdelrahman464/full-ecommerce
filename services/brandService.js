@@ -28,7 +28,7 @@ exports.resizeImage = asyncHandler(async (req, res, next) => {
 //@desc get list of brand
 //@route GET /api/v1/brands
 //@access public
-exports.getBrands = factory.getALl(Brand);
+exports.getBrands = factory.getALl(Brand,"name_en as name, age as h, number as ");
 //@desc get specific brand by id
 //@route GET /api/v1/brand/:id
 //@access public

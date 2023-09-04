@@ -11,10 +11,7 @@ exports.signupValidator = [
     .withMessage("too short User name")
     .isLength({ max: 100 })
     .withMessage("too long User name")
-    .custom((val, { req }) => {
-      req.body.slug = slugify(val);
-      return true;
-    }),
+    ,
 
   check("email")
     .notEmpty()

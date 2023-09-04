@@ -3,16 +3,19 @@ const mongoose = require("mongoose");
 //1- create schema
 const brnadSchema = mongoose.Schema(
   {
-    name: {
+    name_ar: {
       type: String,
       required: [true, "category required"],
       unique: [true, "category must be unique"],
       minlength: [3, "too short category name"],
       maxlength: [32, "too long category name"],
     },
-    slug: {
+    name_en: {
       type: String,
-      lowercase: true,
+      required: [true, "category required"],
+      unique: [true, "category must be unique"],
+      minlength: [3, "too short category name"],
+      maxlength: [32, "too long category name"],
     },
     image: String,
   },

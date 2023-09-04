@@ -2,16 +2,19 @@ const mongoose = require("mongoose");
 
 const subCategorySchema = new mongoose.Schema(
   {
-    name: {
+    name_ar: {
       type: String,
       trim: true,
       unique: [true, "category must be unique"],
       minlength: [2, "too short subCategory name"],
       maxlength: [32, "too long subCategory name"],
     },
-    slug: {
+    name_en: {
       type: String,
-      lowercase: true,
+      trim: true,
+      unique: [true, "category must be unique"],
+      minlength: [2, "too short subCategory name"],
+      maxlength: [32, "too long subCategory name"],
     },
     category: {
       type: mongoose.Schema.ObjectId,

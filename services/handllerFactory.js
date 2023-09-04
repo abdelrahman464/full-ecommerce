@@ -40,7 +40,7 @@ exports.getOne = (Model, populationOt) =>
     res.status(200).json({ data: document });
   });
 
-exports.getALl = (Model, modelName = "") =>
+  exports.getALl = (Model, modelName = "") =>
   asyncHandler(async (req, res) => {
     let filter = {};
     if (req.filterObj) {
@@ -61,6 +61,21 @@ exports.getALl = (Model, modelName = "") =>
       .status(200)
       .json({ results: documents.length, paginationResult, data: documents });
   });
+  //   const documentsCounts = await Model.countDocuments();
+  //   const apiFeatures = new ApiFeatures(Model.find(filter), req.query)
+  //     .paginate(documentsCounts)
+  //     .filter()
+  //     .search(modelName)
+  //     .limitFields()
+  //     .sort();
+
+  //   const { mongooseeQuery, paginationResult } = apiFeatures;
+  //   const documents = await mongooseeQuery;
+
+  //   res
+  //     .status(200)
+  //     .json({ results: documents.length, paginationResult, data: documents });
+  // });
 
 exports.deleteOne = (Model) =>
   asyncHandler(async (req, res, next) => {
