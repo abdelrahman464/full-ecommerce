@@ -5,7 +5,6 @@ const {
   updateProductValidator,
   deleteProductValidator,
 } = require("../utils/validators/productValidator");
-const convertToArray = require("../middlewares/convertToArraysubCategoriesAndColors");
 const authServices = require("../services/authServices");
 const {
   getProducts,
@@ -15,6 +14,7 @@ const {
   deleteProduct,
   uploadProductImages,
   resizeProductImages,
+  convertToArray
 } = require("../services/productService");
 
 // nested routes
