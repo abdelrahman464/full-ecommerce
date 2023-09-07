@@ -34,6 +34,18 @@ exports.convertToArray = (req, res, next) => {
       req.body.sizes = [req.body.sizes];
     }
   }
+  if (req.body. highlights_ar) {
+    // If it's not an array, convert it to an array
+    if (!Array.isArray(req.body. highlights_ar)) {
+      req.body. highlights_ar = [req.body. highlights_ar];
+    }
+  }
+  if (req.body. highlights_en) {
+    // If it's not an array, convert it to an array
+    if (!Array.isArray(req.body. highlights_en)) {
+      req.body. highlights_en = [req.body. highlights_en];
+    }
+  }
   next();
 };
 
