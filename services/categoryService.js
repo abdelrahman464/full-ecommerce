@@ -3,28 +3,73 @@ const { v4: uuidv4 } = require("uuid");
 const asyncHandler = require("express-async-handler");
 const Category = require("../models/categoryModel");
 const factory = require("./handllerFactory");
-const { uploadSingleImage } = require("../middlewares/uploadImageMiddleware");
+const { uploadMixOfImages } = require("../middlewares/uploadImageMiddleware");
 
 //upload Singel image
-exports.uploadCategoryImage = uploadSingleImage("image");
+// exports.uploadCategoryImage = uploadSingleImage("image");
+exports.uploadCategoryImage = uploadMixOfImages([
+  {
+    name: "imageCover",
+    maxCount: 1,
+  },
+  {
+    name: "images",
+    maxCount: 10,
+  },
+]);
+//image processing
+// exports.resizeImage = asyncHandler(async (req, res, next) => {
+//   const filename = `category-${uuidv4()}-${Date.now()}.jpeg`;
+
+//   if (req.file) {
+//     await sharp(req.file.buffer)
+//       .resize(600, 600)
+//       .toFormat("jpeg")
+//       .jpeg({ quality: 95 })
+//       .toFile(`uploads/categories/${filename}`);
+
+//     //save image into our db
+//     req.body.image = filename;
+//   }
+
+//   next();
+// });
 //image processing
 exports.resizeImage = asyncHandler(async (req, res, next) => {
-  const filename = `category-${uuidv4()}-${Date.now()}.jpeg`;
+  //1- Image processing for imageCover
+  if (req.files.imageCover) {
+    const imageCoverFileName = `category-${uuidv4()}-${Date.now()}-cover.jpeg`;
 
-  if (req.file) {
-    await sharp(req.file.buffer)
-      .resize(600, 600)
+    await sharp(req.files.imageCover[0].buffer)
+      .resize(2000, 1333)
       .toFormat("jpeg")
       .jpeg({ quality: 95 })
-      .toFile(`uploads/categories/${filename}`);
+      .toFile(`uploads/categories/${imageCoverFileName}`);
 
-    //save image into our db
-    req.body.image = filename;
+    // Save image into our db
+    req.body.imageCover = imageCoverFileName;
+  }
+  //2- Image processing for images
+  if (req.files.images) {
+    req.body.images = [];
+    await Promise.all(
+      req.files.images.map(async (img, index) => {
+        const imageName = `category-${uuidv4()}-${Date.now()}-${index + 1}.jpeg`;
+
+        await sharp(img.buffer)
+          .resize(2000, 1333)
+          .toFormat("jpeg")
+          .jpeg({ quality: 95 })
+          .toFile(`uploads/categories/${imageName}`);
+
+        // Save image into our db
+        req.body.images.push(imageName);
+      })
+    );
   }
 
   next();
 });
-
 //@desc get list of categories
 //@route GET /api/v1/categories
 //@access public

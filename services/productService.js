@@ -12,7 +12,7 @@ exports.uploadProductImages = uploadMixOfImages([
   },
   {
     name: "images",
-    maxCount: 5,
+    maxCount: 10,
   },
 ]);
 exports.convertToArray = (req, res, next) => {

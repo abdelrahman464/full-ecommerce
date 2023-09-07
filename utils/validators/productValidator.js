@@ -18,19 +18,33 @@ exports.createProductValidator = [
     .notEmpty()
     .withMessage("product arabic name required"),
 
+  check("shortDescription_en")
+    .notEmpty()
+    .withMessage("Product english description is required")
+    .isLength({ min: 10 })
+    .withMessage("Too short Product english description")
+    .isLength({ max: 300 })
+    .withMessage("Too long Product english description"),
+  check("shortDescription_ar")
+    .notEmpty()
+    .withMessage("Product arabic description is required")
+    .isLength({ min: 10 })
+    .withMessage("Too short Product arabic description")
+    .isLength({ max: 300 })
+    .withMessage("Too long Product arabic description"),
   check("description_en")
     .notEmpty()
     .withMessage("Product english description is required")
     .isLength({ min: 20 })
     .withMessage("Too short Product english description")
-    .isLength({ max: 2000 })
+    .isLength({ max: 1000 })
     .withMessage("Too long Product english description"),
   check("description_ar")
     .notEmpty()
     .withMessage("Product arabic description is required")
     .isLength({ min: 20 })
     .withMessage("Too short Product arabic description")
-    .isLength({ max: 2000 })
+    .isLength({ max: 1000 })
     .withMessage("Too long Product arabic description"),
   check("quantity")
     .notEmpty()
