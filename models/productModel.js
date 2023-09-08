@@ -109,15 +109,15 @@ productSchema.pre(/^find/, function (next) {
   // this => query
   this.populate({
     path: "subCategories",
-    select: "name -_id",
+    select: "name_ar name_en -_id",
   });
   this.populate({
     path: "category",
-    select: "name -_id",
+    select: "name_ar name_en -_id",
   });
   this.populate({
     path: "brand",
-    select: "name -_id",
+    select: "name_en name_ar -_id",
   });
 
   next();

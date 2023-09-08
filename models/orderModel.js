@@ -57,7 +57,7 @@ const orderSchema = new mongoose.Schema(
 orderSchema.pre(/^find/, function (next) {
   this.populate({ path: "user", select: "name phone email " }).populate({
     path: "cartItems.product",
-    select: "title imageCover category",
+    select: "title_ar title_en imageCover category",
   });
   next();
 });

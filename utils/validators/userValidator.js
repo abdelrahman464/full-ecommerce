@@ -51,8 +51,8 @@ exports.createUserValidator = [
 
   check("phone")
     .optional()
-    .isMobilePhone(["ar-EG", "ar-SA"])
-    .withMessage("Invalid phone number only accepted Egy and SA Phone numbers"),
+    .isMobilePhone()
+    .withMessage("Invalid phone number "),
 
   check("profileImg").optional(),
 
@@ -77,8 +77,8 @@ exports.updateUserValidator = [
     ),
   check("phone")
     .optional()
-    .isMobilePhone(["ar-EG", "ar-SA"])
-    .withMessage("Invalid phone number only accepted Egy and SA Phone numbers"),
+    .isMobilePhone()
+    .withMessage("Invalid phone number "),
 
   check("profileImg").optional(),
 

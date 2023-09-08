@@ -74,7 +74,7 @@ subCategorySchema.pre(/^find/, function (next) {
   // this => query
   this.populate({
     path: "category",
-    select: "name -_id",
+    select: "name_en name_ar -_id",
   });
   next();
 });
