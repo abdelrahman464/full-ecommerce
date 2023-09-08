@@ -27,8 +27,8 @@ router
   .route("/")
   .get(getCategories)
   .post(
-    // authServices.protect,
-    // authServices.allowedTo("admin", "manager"),
+    authServices.protect,
+    authServices.allowedTo("admin", "manager"),
     uploadCategoryImage,
     resizeImage,
     createCategroyValidator,

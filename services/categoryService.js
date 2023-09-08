@@ -18,23 +18,6 @@ exports.uploadCategoryImage = uploadMixOfImages([
   },
 ]);
 //image processing
-// exports.resizeImage = asyncHandler(async (req, res, next) => {
-//   const filename = `category-${uuidv4()}-${Date.now()}.jpeg`;
-
-//   if (req.file) {
-//     await sharp(req.file.buffer)
-//       .resize(600, 600)
-//       .toFormat("jpeg")
-//       .jpeg({ quality: 95 })
-//       .toFile(`uploads/categories/${filename}`);
-
-//     //save image into our db
-//     req.body.image = filename;
-//   }
-
-//   next();
-// });
-//image processing
 exports.resizeImage = asyncHandler(async (req, res, next) => {
   //1- Image processing for imageCover
   if (req.files.imageCover) {

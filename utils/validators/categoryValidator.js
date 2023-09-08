@@ -24,18 +24,18 @@ exports.createCategroyValidator = [
     .withMessage("too long category arabic name"),
   check("description_en")
     .notEmpty()
-    .withMessage("Product english description is required")
+    .withMessage("category english description is required")
     .isLength({ min: 20 })
-    .withMessage("Too short Product english description")
+    .withMessage("Too short category english description")
     .isLength({ max: 2000 })
-    .withMessage("Too long Product english description"),
+    .withMessage("Too long category english description"),
   check("description_ar")
     .notEmpty()
-    .withMessage("Product arabic description is required")
+    .withMessage("category arabic description is required")
     .isLength({ min: 20 })
-    .withMessage("Too short Product arabic description")
+    .withMessage("Too short category arabic description")
     .isLength({ max: 2000 })
-    .withMessage("Too long Product arabic description"),
+    .withMessage("Too long category arabic description"),
   check("imageCover").notEmpty().withMessage("Product imageCover is required"),
   check("images")
     .optional()
@@ -45,8 +45,30 @@ exports.createCategroyValidator = [
 ];
 exports.updateCategroyValidator = [
   check("id").isMongoId().withMessage("Invalid category id format"),
-  body("name_en").optional(),
-  body("name_ar").optional(),
+  body("name_en")
+    .optional()
+    .isLength({ min: 3 })
+    .withMessage("too short category name")
+    .isLength({ max: 32 })
+    .withMessage("too long category name"),
+  body("name_ar")
+    .optional()
+    .isLength({ min: 2 })
+    .withMessage("too short category arabic name ")
+    .isLength({ max: 32 })
+    .withMessage("too long category arabic name"),
+  check("description_en")
+    .optional()
+    .isLength({ min: 20 })
+    .withMessage("Too short category english description")
+    .isLength({ max: 2000 })
+    .withMessage("Too long category english description"),
+  check("description_ar")
+    .optional()
+    .isLength({ min: 20 })
+    .withMessage("Too short category arabic description")
+    .isLength({ max: 2000 })
+    .withMessage("Too long category arabic description"),
   validatorMiddleware,
 ];
 exports.deleteCategroyValidator = [

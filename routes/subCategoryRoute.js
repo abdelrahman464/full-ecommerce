@@ -7,6 +7,8 @@ const {
   deleteSubCategory,
   setCategoryIdToBody,
   createFilterObj,
+  uploadSubCategoryImage,
+  resizeImage
 } = require("../services/subCategoryService");
 const authServices = require("../services/authServices");
 const {
@@ -32,6 +34,7 @@ router
     authServices.protect,
     authServices.allowedTo("admin", "manager"),
     setCategoryIdToBody,
+    uploadSubCategoryImage,resizeImage,
     createSupCategroyValidator,
     createSubCategory
   );
@@ -41,6 +44,7 @@ router
   .put(
     authServices.protect,
     authServices.allowedTo("admin", "manager"),
+    uploadSubCategoryImage,resizeImage,
     updateCategroyValidator,
     updateSubCategory
   )

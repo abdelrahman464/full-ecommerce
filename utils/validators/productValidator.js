@@ -11,13 +11,11 @@ exports.createProductValidator = [
     .withMessage("product english name required")
     .isLength({ min: 3 })
     .withMessage("product english name must be at least 3 chars"),
-
   check("title_ar")
     .isLength({ min: 3 })
     .withMessage("product arabic name must be at least 3 chars")
     .notEmpty()
     .withMessage("product arabic name required"),
-
   check("shortDescription_en")
     .notEmpty()
     .withMessage("Product english description is required")
@@ -174,18 +172,38 @@ exports.getProductValidator = [
 
 exports.updateProductValidator = [
   check("id").isMongoId().withMessage("Invalid ID format"),
-  check("title")
+    check("title_en")
     .optional()
     .isLength({ min: 3 })
-    .withMessage("must be at least 3 chars")
-    .notEmpty()
-    .withMessage("Product required"),
-  check("description")
+    .withMessage("product english name must be at least 3 chars"),
+  check("title_ar")
+    .isLength({ min: 3 })
+    .withMessage("product arabic name must be at least 3 chars")
+    .optional(),
+  check("shortDescription_en")
+    .optional()
+    .isLength({ min: 10 })
+    .withMessage("Too short Product english description")
+    .isLength({ max: 300 })
+    .withMessage("Too long Product english description"),
+  check("shortDescription_ar")
+    .optional()
+    .isLength({ min: 10 })
+    .withMessage("Too short Product arabic description")
+    .isLength({ max: 300 })
+    .withMessage("Too long Product arabic description"),
+  check("description_en")
     .optional()
     .isLength({ min: 20 })
-    .withMessage("Too short description")
-    .isLength({ max: 2000 })
-    .withMessage("Too long description"),
+    .withMessage("Too short Product english description")
+    .isLength({ max: 1000 })
+    .withMessage("Too long Product english description"),
+  check("description_ar")
+    .optional()
+    .isLength({ min: 20 })
+    .withMessage("Too short Product arabic description")
+    .isLength({ max: 1000 })
+    .withMessage("Too long Product arabic description"),
   check("quantity")
     .optional()
     .isNumeric()

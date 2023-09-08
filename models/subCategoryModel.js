@@ -21,9 +21,54 @@ const subCategorySchema = new mongoose.Schema(
       ref: "Category",
       required: [true, "subCategory must be belong to parent category"],
     },
+    description_ar: {
+      type: String,
+      required: [true, "subCategory description is required"],
+      trim: true,
+      minlength: [20, "Too short subCategory description"],
+    },
+    description_en: {
+      type: String,
+      required: [true, "subCategory description is required"],
+      trim: true,
+      minlength: [20, "Too short subCategory description"],
+    },
+    imageCover: {
+      type: String,
+      required: [true, "subCategory image cover is required"],
+    },
+    images: [String],
   },
   { timestamps: true }
 );
+
+
+const setImageURL = (doc) => {
+  //return image base url + iamge name
+  if (doc.imageCover) {
+    const imageUrl = `${process.env.BASE_URL}/subCategories/${doc.imageCover}`;
+    doc.imageCover = imageUrl;
+  }
+  if (doc.images) {
+    const imageListWithUrl = [];
+    doc.images.forEach((image) => {
+      const imageUrl = `${process.env.BASE_URL}/subCategories/${image}`;
+      imageListWithUrl.push(imageUrl);
+    });
+    doc.images = imageListWithUrl;
+  }
+};
+//after initializ the doc in db
+// check if the document contains image
+// it work with findOne,findAll,update
+subCategorySchema.post("init", (doc) => {
+  setImageURL(doc);
+});
+// it work with create
+subCategorySchema.post("save", (doc) => {
+  setImageURL(doc);
+});
+
 // ^find => it mean if part of of teh word contains find
 subCategorySchema.pre(/^find/, function (next) {
   // this => query
