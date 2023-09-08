@@ -38,11 +38,20 @@ const categorySchema = mongoose.Schema(
   { timestamps: true }
 );
 
+
 const setImageURL = (doc) => {
   //return image base url + iamge name
-  if (doc.image) {
-    const imageUrl = `${process.env.BASE_URL}/categories/${doc.image}`;
-    doc.image = imageUrl;
+  if (doc.imageCover) {
+    const imageUrl = `${process.env.BASE_URL}/categories/${doc.imageCover}`;
+    doc.imageCover = imageUrl;
+  }
+  if (doc.images) {
+    const imageListWithUrl = [];
+    doc.images.forEach((image) => {
+      const imageUrl = `${process.env.BASE_URL}/categories/${image}`;
+      imageListWithUrl.push(imageUrl);
+    });
+    doc.images = imageListWithUrl;
   }
 };
 //after initializ the doc in db
