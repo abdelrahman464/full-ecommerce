@@ -1,6 +1,4 @@
-const stripe = require("stripe")(
-  "sk_test_51MwAUQGzwHa0nr5TTmR18s20ZIWn4BXVIJoKN36aJ6IDiykIH486DykrASrxdEXXNq0pk6zpQvfNmqschaQibIBF00dmluI50u"
-);
+const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const asyncHandler = require("express-async-handler");
 const ApiError = require("../utils/apiError");
 const factory = require("./handllerFactory");
@@ -9,62 +7,62 @@ const Order = require("../models/orderModel");
 const Cart = require("../models/cartModel");
 const User = require("../models/userModel");
 const Product = require("../models/productModel");
-const sendEmail = require("../utils/sendEmail");
+
 
 //@desc create cash order
 //@route POST /api/v1/orders/:cartId
 //@access protected/user
-exports.createCashOrder = asyncHandler(async (req, res, next) => {
-  const { cartId } = req.params;
-  //app settings
-  const taxPrice = 0;
-  const shippingPrice = 0;
-  //1) get cart depend on catrId
-  const cart = await Cart.findById(cartId);
-  if (!cart) {
-    return next(
-      new ApiError(`there is no cart with id ${req.params.catrId}`, 404)
-    );
-  }
-  //2) get order price cart price  "check if copoun applied"
-  const cartPrice = cart.totalCartpriceAfterDiscount
-    ? cart.totalCartpriceAfterDiscount
-    : cart.totalCartprice;
-  const totalOrderPrice = cartPrice + taxPrice + shippingPrice;
-  //3)create order with default payment method cash
-  const order = await Order.create({
-    user: req.user._id,
-    cartItems: cart.cartItems,
-    shippingAddress: req.body.shippingAddress,
-    totalOrderPrice,
-  });
-  //4) after creating order  decerement product quantity and increment product sold
-  if (order) {
-    const bulkOptions = cart.cartItems.map((item) => ({
-      updateOne: {
-        filter: { _id: item.product },
-        update: { $inc: { quantity: -item.quantity, sold: +item.quantity } },
-      },
-    }));
-    await Product.bulkWrite(bulkOptions, {});
-    //5)clear cart depend on cartId
-    await Cart.findByIdAndDelete(cartId);
+// exports.createCashOrder = asyncHandler(async (req, res, next) => {
+//   const { cartId } = req.params;
+//   //app settings
+//   const taxPrice = 0;
+//   const shippingPrice = 0;
+//   //1) get cart depend on catrId
+//   const cart = await Cart.findById(cartId);
+//   if (!cart) {
+//     return next(
+//       new ApiError(`there is no cart with id ${req.params.catrId}`, 404)
+//     );
+//   }
+//   //2) get order price cart price  "check if copoun applied"
+//   const cartPrice = cart.totalCartpriceAfterDiscount
+//     ? cart.totalCartpriceAfterDiscount
+//     : cart.totalCartprice;
+//   const totalOrderPrice = cartPrice + taxPrice + shippingPrice;
+//   //3)create order with default payment method cash
+//   const order = await Order.create({
+//     user: req.user._id,
+//     cartItems: cart.cartItems,
+//     shippingAddress: req.body.shippingAddress,
+//     totalOrderPrice,
+//   });
+//   //4) after creating order  decerement product quantity and increment product sold
+//   if (order) {
+//     const bulkOptions = cart.cartItems.map((item) => ({
+//       updateOne: {
+//         filter: { _id: item.product },
+//         update: { $inc: { quantity: -item.quantity, sold: +item.quantity } },
+//       },
+//     }));
+//     await Product.bulkWrite(bulkOptions, {});
+//     //5)clear cart depend on cartId
+//     await Cart.findByIdAndDelete(cartId);
 
-    const userOrder = await User.findById(req.user._id);
-    const emailMessage = `Hi ${userOrder.name},\n Your order has been created successfully \n 
-    you have to wait for 2 days at least before the order arrives to you \n
-    the order Price is : { ${totalOrderPrice} } containing the order cartPrice :${cartPrice}
-    and order shipping price : ${shippingPrice} 
-    and order tax price : ${taxPrice}`  ;
-    //3-send the reset code via email
-    await sendEmail({
-      to: userOrder.email,
-      subject: "Your Order has been created successfully",
-      text: emailMessage,
-    });
-  }
-  res.status(201).json({ status: "success", data: order });
-});
+//     const userOrder = await User.findById(req.user._id);
+//     const emailMessage = `Hi ${userOrder.name},\n Your order has been created successfully \n 
+//     you have to wait for 2 days at least before the order arrives to you \n
+//     the order Price is : { ${totalOrderPrice} } containing the order cartPrice :${cartPrice}
+//     and order shipping price : ${shippingPrice} 
+//     and order tax price : ${taxPrice}`  ;
+//     //3-send the reset code via email
+//     await sendEmail({
+//       to: userOrder.email,
+//       subject: "Your Order has been created successfully",
+//       text: emailMessage,
+//     });
+//   }
+//   res.status(201).json({ status: "success", data: order });
+// });
 
 exports.filterOrderForLoggedUser = asyncHandler(async (req, res, next) => {
   if (req.user.role === "user") req.filterObj = { user: req.user._id };
@@ -142,7 +140,7 @@ exports.checkoutSession = asyncHandler(async (req, res, next) => {
       {
         price_data: {
           unit_amount: totalOrderPrice * 100,
-          currency: "egp",
+          currency: "uds",
           product_data: {
             name: req.user.name,
           },
@@ -194,15 +192,6 @@ const createCardOrder = async (session) => {
     //5)clear cart depend on cartId
     await Cart.findByIdAndDelete(cartId);
 
-    const emailMessage = `Hi ${user.name},\n Your order has been created successfully \n 
-    you have to wait for 2 days at least before the order arrives to you \n
-    the order Price is : { ${orderPrice} } `  ;
-    //3-send the reset code via email
-    await sendEmail({
-      to: session.customer_email,
-      subject: "Your Order has been created successfully",
-      text: emailMessage,
-    });
 
 
   }
