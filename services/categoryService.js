@@ -24,7 +24,7 @@ exports.resizeImage = asyncHandler(async (req, res, next) => {
     const imageCoverFileName = `category-${uuidv4()}-${Date.now()}-cover.jpeg`;
 
     await sharp(req.files.imageCover[0].buffer)
-      .resize(2000, 1333)
+      
       .toFormat("jpeg")
       .jpeg({ quality: 95 })
       .toFile(`uploads/categories/${imageCoverFileName}`);
@@ -40,7 +40,7 @@ exports.resizeImage = asyncHandler(async (req, res, next) => {
         const imageName = `category-${uuidv4()}-${Date.now()}-${index + 1}.jpeg`;
 
         await sharp(img.buffer)
-          .resize(2000, 1333)
+          
           .toFormat("jpeg")
           .jpeg({ quality: 95 })
           .toFile(`uploads/categories/${imageName}`);

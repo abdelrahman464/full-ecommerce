@@ -13,7 +13,7 @@ exports.resizeImage = asyncHandler(async (req, res, next) => {
 
   if (req.file) {
     await sharp(req.file.buffer)
-      .resize(600, 600)
+    
       .toFormat("jpeg")
       .jpeg({ quality: 95 })
 

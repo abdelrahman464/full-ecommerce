@@ -37,30 +37,23 @@ class ApiFeatures {
     return this;
   }
 
-//   search(modelName) {
-//     if (this.queryStr.keyword) {
-//       const query = {};
-      
-//       query.$or = [
-//         { title: { $regex: this.queryStr.keyword, $options: "i" } },
-//         { description: { $regex: this.queryStr.keyword, $options: "i" } },
-//       ];
-
-//       this.mongooseeQuery = this.mongooseeQuery.find(query);
-//     }
-//     return this;
-//   }
 
   search(modelName) {
     if (this.queryStr.keyword) {
       let query = {};
       if (modelName === 'Product') {
         query.$or = [
-          { title: { $regex: this.queryStr.keyword, $options: 'i' } },
-          { description: { $regex: this.queryStr.keyword, $options: 'i' } },
+          {  title_ar: { $regex: this.queryStr.keyword, $options: 'i' } },
+          {  title_en: { $regex: this.queryStr.keyword, $options: 'i' } },
+          { description_ar: { $regex: this.queryStr.keyword, $options: 'i' } },
+          { description_en: { $regex: this.queryStr.keyword, $options: 'i' } },
         ];
       } else {
-        query = { name: { $regex: this.queryStr.keyword, $options: 'i' } };
+        query = {
+           name: { $regex: this.queryStr.keyword, $options: 'i' },
+           name_ar: { $regex: this.queryStr.keyword, $options: 'i' },
+           name_en: { $regex: this.queryStr.keyword, $options: 'i' },
+           };
       }
       this.mongooseeQuery = this.mongooseeQuery.find(query);
     }
