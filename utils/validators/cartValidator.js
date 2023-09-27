@@ -27,13 +27,20 @@ exports.addProductToCartValidator = [
       }
       return true;
     }),
-    check("size")
+  check("size")
     .optional()
     .custom(async (val, { req }) => {
       const product = await Product.findById(req.body.productId);
-      if (!product.sizes.includes(val)) {
+      if (
+        !product.size_EU.includes(val) &&
+        !product.size_UK.includes(val) &&
+        !product.size_US.includes(val) &&
+        !product.size_JPN.includes(val) &&
+        !product.size_CM.includes(val)
+      ) {
         throw new Error("Invalid size selected for this item");
       }
+
       return true;
     }),
 

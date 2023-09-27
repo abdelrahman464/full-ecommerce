@@ -75,10 +75,26 @@ exports.createProductValidator = [
     .optional()
     .isArray()
     .withMessage("availableColors should be array of string"),
-  check("sizes")
+  check("size_EU")
     .optional()
     .isArray()
-    .withMessage("availableSizes should be array of Number"),
+    .withMessage("available size_EU should be array of Number"),
+  check("size_UK")
+    .optional()
+    .isArray()
+    .withMessage("available size_UK should be array of Number"),
+  check("size_US")
+    .optional()
+    .isArray()
+    .withMessage("available size_US should be array of Number"),
+  check("size_JPN")
+    .optional()
+    .isArray()
+    .withMessage("available size_JPN should be array of Number"),
+  check("size_CM")
+    .optional()
+    .isArray()
+    .withMessage("available size_CM should be array of Number"),
   check("imageCover").notEmpty().withMessage("Product imageCover is required"),
   check("images")
     .optional()
@@ -233,10 +249,26 @@ exports.updateProductValidator = [
     .optional()
     .isArray()
     .withMessage("availableColors should be array of string"),
-  check("sizes")
+    check("size_EU")
     .optional()
     .isArray()
-    .withMessage("availableSizes should be array of Number"),
+    .withMessage("available size_EU should be array of Number"),
+  check("size_UK")
+    .optional()
+    .isArray()
+    .withMessage("available size_UK should be array of Number"),
+  check("size_US")
+    .optional()
+    .isArray()
+    .withMessage("available size_US should be array of Number"),
+  check("size_JPN")
+    .optional()
+    .isArray()
+    .withMessage("available size_JPN should be array of Number"),
+  check("size_CM")
+    .optional()
+    .isArray()
+    .withMessage("available size_CM should be array of Number"),
   check("imageCover").optional(),
   check("images")
     .optional()

@@ -58,7 +58,6 @@ const productSchema = new mongoose.Schema(
       type: Number,
     },
     colors: [String],
-    sizes: [String],
     imageCover: {
       type: String,
       required: [true, "Product image cover is required"],
@@ -88,6 +87,21 @@ const productSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    size_EU:[
+      String
+    ],
+    size_UK:[
+      String
+    ],
+    size_US:[
+      String
+    ],
+    size_JPN:[
+      String
+    ],
+    size_CM:[
+      String
+    ],
   },
   {
     timeseries: true,
