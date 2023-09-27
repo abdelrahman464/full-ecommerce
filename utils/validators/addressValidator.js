@@ -4,8 +4,8 @@ const validatorMiddleware = require("../../middlewares/validatorMiddleware");
 exports.addAddressValidator = [
   body("phone")
     .optional()
-    .isMobilePhone(["ar-EG", "ar-SA"])
-    .withMessage("Invalid phone number only accepted Egy and SA Phone numbers"),
+    .isMobilePhone()
+    .withMessage("Invalid phone number "),
   check("alias").notEmpty().withMessage("alias required"),
   check("details").notEmpty().withMessage("details required"),
   check("phone").notEmpty().withMessage("phone required"),

@@ -188,7 +188,7 @@ exports.getProductValidator = [
 
 exports.updateProductValidator = [
   check("id").isMongoId().withMessage("Invalid ID format"),
-    check("title_en")
+  check("title_en")
     .optional()
     .isLength({ min: 3 })
     .withMessage("product english name must be at least 3 chars"),
@@ -249,26 +249,55 @@ exports.updateProductValidator = [
     .optional()
     .isArray()
     .withMessage("availableColors should be array of string"),
-    check("size_EU")
+  check("sizes")
     .optional()
     .isArray()
-    .withMessage("available size_EU should be array of Number"),
+    .withMessage("available size_EU should be array "),
+  check("size_EU")
+    .optional()
+    .isArray()
+    .withMessage("available size_UK should be array "),
   check("size_UK")
     .optional()
     .isArray()
-    .withMessage("available size_UK should be array of Number"),
+    .withMessage("available size_US should be array "),
   check("size_US")
     .optional()
     .isArray()
-    .withMessage("available size_US should be array of Number"),
-  check("size_JPN")
+    .withMessage("available size_JPN should be array "),
+  check("size_Japan")
     .optional()
     .isArray()
-    .withMessage("available size_JPN should be array of Number"),
+    .withMessage("available size_CM should be array "),
+  check("size_ChinaTops")
+    .optional()
+    .isArray()
+    .withMessage("available size_EU should be array "),
+  check("size_ChinaButtoms")
+    .optional()
+    .isArray()
+    .withMessage("available size_UK should be array "),
+  check("size_korea")
+    .optional()
+    .isArray()
+    .withMessage("available size_US should be array "),
+  check("size_Mexico")
+    .optional()
+    .isArray()
+    .withMessage("available size_JPN should be array "),
+  check("size_Brazil")
+    .optional()
+    .isArray()
+    .withMessage("available size_CM should be array "),
   check("size_CM")
     .optional()
     .isArray()
-    .withMessage("available size_CM should be array of Number"),
+    .withMessage("available size_CM should be array "),
+  check("size_In")
+    .optional()
+    .isArray()
+    .withMessage("available size_CM should be array "),
+
   check("imageCover").optional(),
   check("images")
     .optional()

@@ -18,7 +18,7 @@ const calculateTotalCartPrice = (cart) => {
 //@route POST /api/v1/auth/cart
 //@access private/User
 exports.addProductToCart = asyncHandler(async (req, res, next) => {
-  const { productId, color ,size} = req.body;
+  const { productId,color,size} = req.body;
 
   const product = await Product.findById(productId);
   if (!product) {

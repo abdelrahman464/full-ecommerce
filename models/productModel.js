@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema(
   {
+    type: {
+      type: String,
+      enum: ["men", "women", "kids"],
+      default: "user",
+    },
     title_ar: {
       type: String,
       required: true,
@@ -87,6 +92,9 @@ const productSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    sizes:[
+      String
+    ],
     size_EU:[
       String
     ],
@@ -96,12 +104,31 @@ const productSchema = new mongoose.Schema(
     size_US:[
       String
     ],
-    size_JPN:[
+    size_Japan:[
+      String
+    ],
+    size_ChinaTops:[
+      String
+    ],
+    size_ChinaButtoms:[
+      String
+    ],
+    size_korea:[
+      String
+    ],
+    size_Mexico:[
+      String
+    ],
+    size_Brazil:[
       String
     ],
     size_CM:[
       String
     ],
+    size_In:[
+      String
+    ],
+   
   },
   {
     timeseries: true,
