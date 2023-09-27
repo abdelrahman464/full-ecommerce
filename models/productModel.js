@@ -110,6 +110,9 @@ const productSchema = new mongoose.Schema(
     size_ChinaTops:[
       String
     ],
+    size_italy:[
+      String
+    ],
     size_ChinaButtoms:[
       String
     ],
