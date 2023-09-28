@@ -82,6 +82,12 @@ exports.convertToArray = (req, res, next) => {
       req.body.size_italy = [req.body.size_italy];
     }
   }
+  if (req.body.size_france) {
+    // If it's not an array, convert it to an array
+    if (!Array.isArray(req.body.size_france)) {
+      req.body.size_france = [req.body.size_france];
+    }
+  }
   if (req.body.size_Mexico) {
     // If it's not an array, convert it to an array
     if (!Array.isArray(req.body.size_Mexico)) {

@@ -41,6 +41,7 @@ exports.addProductToCartValidator = [
         !product.size_ChinaTops.includes(val) &&
         !product.size_ChinaButtoms.includes(val) &&
         !product.size_korea.includes(val) &&
+        !product.size_france.includes(val) &&
         !product.size_Mexico.includes(val) &&
         !product.size_Brazil.includes(val) &&
         !product.size_italy.includes(val) &&
