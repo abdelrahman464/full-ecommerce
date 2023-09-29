@@ -8,7 +8,8 @@ const {
   setCategoryIdToBody,
   createFilterObj,
   uploadSubCategoryImage,
-  resizeImage
+  resizeImage,
+  getSubWithType
 } = require("../services/subCategoryService");
 const authServices = require("../services/authServices");
 const {
@@ -21,6 +22,8 @@ const {
 // mergeParams =>> it allows you to access the params from another resource
 //ex: we need to access {categoryId} from category router
 const router = express.Router({ mergeParams: true });
+
+router.get('/getWithType/:type',getSubWithType)
 
 router
   .route("/")

@@ -2,11 +2,7 @@ const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema(
   {
-    type: {
-      type: String,
-      enum: ["men", "women", "kids"],
-      default: "user",
-    },
+    
     title_ar: {
       type: String,
       required: true,
