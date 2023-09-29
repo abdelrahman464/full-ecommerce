@@ -273,6 +273,14 @@ exports.updateProductValidator = [
     .optional()
     .isArray()
     .withMessage("available size_EU should be array "),
+  check("size_italy")
+    .optional()
+    .isArray()
+    .withMessage("available size_EU should be array "),
+  check("size_france")
+    .optional()
+    .isArray()
+    .withMessage("available size_EU should be array "),
   check("size_ChinaButtoms")
     .optional()
     .isArray()
