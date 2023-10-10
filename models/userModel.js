@@ -30,6 +30,7 @@ const userShcema = new mongoose.Schema(
       enum: ["user", "manager", "admin"],
       default: "user",
     },
+    country:String,
     active: {
       type: Boolean,
       default: true,
