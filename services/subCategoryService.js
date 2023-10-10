@@ -2,6 +2,8 @@ const sharp = require("sharp");
 const { v4: uuidv4 } = require("uuid");
 const asyncHandler = require("express-async-handler");
 const SubCategory = require("../models/subCategoryModel");
+const Category = require("../models/categoryModel");
+
 const factory = require("./handllerFactory");
 const { uploadMixOfImages } = require("../middlewares/uploadImageMiddleware");
 
@@ -89,3 +91,28 @@ exports.updateSubCategory = factory.updateOne(SubCategory);
 //@access private
 
 exports.deleteSubCategory = factory.deleteOne(SubCategory);
+
+//@desc get subCategory with type of category
+//@route GET /api/v1/getWithType/:type
+//@access public
+exports.getSubWithType = async (req,res)=> {
+  try {
+    const {type}=req.params
+    // Find all categories that contain the specified type
+    const categories = await Category.find({ type });
+
+    // Extract an array of category IDs from the found categories
+    const categoryIds = categories.map((category) => category._id);
+
+    // Find all subcategories whose categoryId is in the categoryIds array
+    const subcategories = await SubCategory.find({ category: { $in: categoryIds } });
+    if(subcategories.length===0){
+      return res.status(400).json({status:`faild`,msg:`there is no subCategories under this this type`})
+    }
+
+    return res.status(200).json({status:`success`,data:subcategories})
+  } catch (error) {
+    return res.status(400).json({status:`faild`,error:error})
+  }
+}
+

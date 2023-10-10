@@ -36,6 +36,11 @@ exports.createCategroyValidator = [
     .withMessage("Too short category arabic description")
     .isLength({ max: 2000 })
     .withMessage("Too long category arabic description"),
+  check("type")
+    .notEmpty()
+    .withMessage("type is required")
+    .isIn(["men", "women", "kids"])
+    .withMessage("un supported type"),
   check("imageCover").notEmpty().withMessage("Product imageCover is required"),
   check("images")
     .optional()
@@ -69,6 +74,10 @@ exports.updateCategroyValidator = [
     .withMessage("Too short category arabic description")
     .isLength({ max: 2000 })
     .withMessage("Too long category arabic description"),
+  check("type")
+    .optional()
+    .isIn(["men", "women", "kids"])
+    .withMessage("un supported type"),
   validatorMiddleware,
 ];
 exports.deleteCategroyValidator = [
