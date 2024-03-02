@@ -12,20 +12,31 @@ const { uploadSingleImage } = require("../middlewares/uploadImageMiddleware");
 exports.uploadProfileImage = uploadSingleImage("profileImg");
 //image processing
 exports.resizeImage = asyncHandler(async (req, res, next) => {
-  const filename = `user-${uuidv4()}-${Date.now()}.jpeg`;
-
-  if (req.file) {
-    await sharp(req.file.buffer)
-      
-      .toFormat("jpeg")
-      .jpeg({ quality: 95 })
-      .toFile(`uploads/users/${filename}`);
-
-    //save image into our db
-    req.body.profileImg = filename;
+  if (!req.file) {
+    return next(new ApiError("No file uploaded", 400));
   }
 
-  next();
+  // Check to ensure the file is an image, this step is redundant if multer's fileFilter is set correctly
+  if (!req.file.mimetype.startsWith("image")) {
+    return next(new ApiError("Invalid file format, only images are allowed", 400));
+  }
+
+  // Proceed with converting and saving the image as .webp
+  const filename = `profileImg-${uuidv4()}-${Date.now()}.webp`;
+  const imagePath = `uploads/users/${filename}`;
+
+  try {
+    await sharp(req.file.buffer)
+      .webp({ quality: 95 }) // Adjust the quality as needed
+      .toFile(imagePath);
+
+    // Store the path of the converted image in req.body for further processing or database storage
+    req.body.profileImg = imagePath;
+    next();
+  } catch (error) {
+    // Handle any errors that occur during the image processing
+    next(new ApiError("Failed to process image", 500));
+  }
 });
 //@desc get list of user
 //@route GET /api/v1/users

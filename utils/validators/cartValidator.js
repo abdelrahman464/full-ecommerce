@@ -27,32 +27,6 @@ exports.addProductToCartValidator = [
       }
       return true;
     }),
-  check("size")
-    .optional()
-    .custom(async (val, { req }) => {
-      const product = await Product.findById(req.body.productId);
-      console.log(product);
-      if (
-        !product.sizes.includes(val) &&
-        !product.size_EU.includes(val) &&
-        !product.size_UK.includes(val) &&
-        !product.size_US.includes(val) &&
-        !product.size_Japan.includes(val) &&
-        !product.size_ChinaTops.includes(val) &&
-        !product.size_ChinaButtoms.includes(val) &&
-        !product.size_korea.includes(val) &&
-        !product.size_france.includes(val) &&
-        !product.size_Mexico.includes(val) &&
-        !product.size_Brazil.includes(val) &&
-        !product.size_italy.includes(val) &&
-        !product.size_CM.includes(val) &&
-        !product.size_In.includes(val)
-      ) {
-        throw new Error("Invalid size selected for this item");
-      }
-
-      return true;
-    }),
 
   validatorMiddleware,
 ];

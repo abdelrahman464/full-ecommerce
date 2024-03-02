@@ -4,6 +4,7 @@ const asyncHandler = require("express-async-handler");
 const { uploadMixOfImages } = require("../middlewares/uploadImageMiddleware");
 const Product = require("../models/productModel");
 const factory = require("./handllerFactory");
+const ApiError = require("../utils/apiError");
 
 exports.uploadProductImages = uploadMixOfImages([
   {
@@ -28,90 +29,6 @@ exports.convertToArray = (req, res, next) => {
       req.body.colors = [req.body.colors];
     }
   }
-  if (req.body.sizes) {
-    // If it's not an array, convert it to an array
-    if (!Array.isArray(req.body.sizes)) {
-      req.body.sizes = [req.body.sizes];
-    }
-  }
-  if (req.body.size_EU) {
-    // If it's not an array, convert it to an array
-    if (!Array.isArray(req.body.size_EU)) {
-      req.body.size_EU = [req.body.size_EU];
-    }
-  }
-  if (req.body.size_UK) {
-    // If it's not an array, convert it to an array
-    if (!Array.isArray(req.body.size_UK)) {
-      req.body.size_UK = [req.body.size_UK];
-    }
-  }
-  if (req.body.size_US) {
-    // If it's not an array, convert it to an array
-    if (!Array.isArray(req.body.size_US)) {
-      req.body.size_US = [req.body.size_US];
-    }
-  }
-  if (req.body.size_Japan) {
-    // If it's not an array, convert it to an array
-    if (!Array.isArray(req.body.size_Japan)) {
-      req.body.size_Japan = [req.body.size_Japan];
-    }
-  }
-  if (req.body.size_ChinaTops) {
-    // If it's not an array, convert it to an array
-    if (!Array.isArray(req.body.size_ChinaTops)) {
-      req.body.size_ChinaTops = [req.body.size_ChinaTops];
-    }
-  }
-  if (req.body.size_ChinaButtoms) {
-    // If it's not an array, convert it to an array
-    if (!Array.isArray(req.body.size_ChinaButtoms)) {
-      req.body.size_ChinaButtoms = [req.body.size_ChinaButtoms];
-    }
-  }
-  if (req.body.size_korea) {
-    // If it's not an array, convert it to an array
-    if (!Array.isArray(req.body.size_korea)) {
-      req.body.size_korea = [req.body.size_korea];
-    }
-  }
-  if (req.body.size_italy) {
-    // If it's not an array, convert it to an array
-    if (!Array.isArray(req.body.size_italy)) {
-      req.body.size_italy = [req.body.size_italy];
-    }
-  }
-  if (req.body.size_france) {
-    // If it's not an array, convert it to an array
-    if (!Array.isArray(req.body.size_france)) {
-      req.body.size_france = [req.body.size_france];
-    }
-  }
-  if (req.body.size_Mexico) {
-    // If it's not an array, convert it to an array
-    if (!Array.isArray(req.body.size_Mexico)) {
-      req.body.size_Mexico = [req.body.size_Mexico];
-    }
-  }
-  if (req.body.size_In) {
-    // If it's not an array, convert it to an array
-    if (!Array.isArray(req.body.size_In)) {
-      req.body.size_In = [req.body.size_In];
-    }
-  }
-  if (req.body.size_Brazil) {
-    // If it's not an array, convert it to an array
-    if (!Array.isArray(req.body.size_Brazil)) {
-      req.body.size_Brazil = [req.body.size_Brazil];
-    }
-  }
-  if (req.body.size_CM) {
-    // If it's not an array, convert it to an array
-    if (!Array.isArray(req.body.size_CM)) {
-      req.body.size_CM = [req.body.size_CM];
-    }
-  }
   if (req.body.highlights_ar) {
     // If it's not an array, convert it to an array
     if (!Array.isArray(req.body.highlights_ar)) {
@@ -126,37 +43,46 @@ exports.convertToArray = (req, res, next) => {
   }
   next();
 };
-
-//image processing
 exports.resizeProductImages = asyncHandler(async (req, res, next) => {
-  //1- Image processing for imageCover
-  if (req.files.imageCover) {
-    const imageCoverFileName = `product-${uuidv4()}-${Date.now()}-cover.jpeg`;
+  // Image processing for imageCover
+  if (req.files.imageCover && req.files.imageCover[0].mimetype.startsWith('image/')) {
+    const imageCoverFileName = `product-${uuidv4()}-${Date.now()}-cover.webp`;
 
     await sharp(req.files.imageCover[0].buffer)
-      .toFormat("jpeg")
-      .jpeg({ quality: 95 })
+      .toFormat('webp') // Convert to WebP
+      .webp({ quality: 90 })
       .toFile(`uploads/products/${imageCoverFileName}`);
 
-    // Save image into our db
+    // Save imageCover file name in the request body for database saving
     req.body.imageCover = imageCoverFileName;
+  } else if (req.files.imageCover) {
+    return next(new ApiError('Image cover is not an image file', 400));
   }
-  //2- Image processing for images
+
+  // Image processing for images
   if (req.files.images) {
-    req.body.images = [];
-    await Promise.all(
-      req.files.images.map(async (img, index) => {
-        const imageName = `product-${uuidv4()}-${Date.now()}-${index + 1}.jpeg`;
+    const imageProcessingPromises = req.files.images.map(async (img, index) => {
+      if (!img.mimetype.startsWith('image/')) {
+        throw new ApiError(`File ${index + 1} is not an image file.`, 400);
+      }
 
-        await sharp(img.buffer)
-          .toFormat("jpeg")
-          .jpeg({ quality: 95 })
-          .toFile(`uploads/products/${imageName}`);
+      const imageName = `product-${uuidv4()}-${Date.now()}-${index + 1}.webp`;
 
-        // Save image into our db
-        req.body.images.push(imageName);
-      })
-    );
+      await sharp(img.buffer)
+        .toFormat('webp') // Convert to WebP
+        .webp({ quality: 90 })
+        .toFile(`uploads/products/${imageName}`);
+
+      return imageName;
+    });
+
+    try {
+      // Wait for all the images to be processed and catch any errors
+      const processedImages = await Promise.all(imageProcessingPromises);
+      req.body.images = processedImages;
+    } catch (error) {
+      return next(error);
+    }
   }
 
   next();

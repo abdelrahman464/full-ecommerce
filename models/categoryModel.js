@@ -29,11 +29,6 @@ const categorySchema = mongoose.Schema(
       trim: true,
       minlength: [20, "Too short category description"],
     },
-    type: {
-      type: String,
-      enum: ["men", "women", "kids"],
-      default: "user",
-    },
     imageCover: {
       type: String,
       required: [true, "category image cover is required"],

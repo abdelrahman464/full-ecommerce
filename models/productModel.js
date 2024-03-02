@@ -88,49 +88,6 @@ const productSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    sizes:[
-      String
-    ],
-    size_EU:[
-      String
-    ],
-    size_UK:[
-      String
-    ],
-    size_US:[
-      String
-    ],
-    size_Japan:[
-      String
-    ],
-    size_ChinaTops:[
-      String
-    ],
-    size_italy:[
-      String
-    ],
-    size_france:[
-      String
-    ],
-    size_ChinaButtoms:[
-      String
-    ],
-    size_korea:[
-      String
-    ],
-    size_Mexico:[
-      String
-    ],
-    size_Brazil:[
-      String
-    ],
-    size_CM:[
-      String
-    ],
-    size_In:[
-      String
-    ],
-   
   },
   {
     timeseries: true,

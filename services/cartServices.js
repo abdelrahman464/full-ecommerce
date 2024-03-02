@@ -18,7 +18,7 @@ const calculateTotalCartPrice = (cart) => {
 //@route POST /api/v1/auth/cart
 //@access private/User
 exports.addProductToCart = asyncHandler(async (req, res, next) => {
-  const { productId,color,size} = req.body;
+  const { productId,color} = req.body;
 
   const product = await Product.findById(productId);
   if (!product) {
@@ -40,12 +40,12 @@ exports.addProductToCart = asyncHandler(async (req, res, next) => {
       user: req.user._id,
       //we can use $addtoSet
 
-      cartItems: [{ product: productId, color,size, price: productPrice }],
+      cartItems: [{ product: productId, color, price: productPrice }],
     });
   } else {
     // is this product exists in the cart,update product quantity
     const productIndex = cart.cartItems.findIndex(
-      (item) => item.product.toString() === productId && item.color === color  && item.size === size
+      (item) => item.product.toString() === productId && item.color === color 
     );
     //find index if there is no item with this productid and color it will return -1
     //if productIndex > -1 then he found a product with  this productid and color  then i will update the quantity
@@ -56,7 +56,7 @@ exports.addProductToCart = asyncHandler(async (req, res, next) => {
       cart.cartItems[productIndex] = cartItem;
     } else {
       //if the product is not exist in the cart ,push product to cartItem array
-      cart.cartItems.push({ product: productId, color,size, price: productPrice });
+      cart.cartItems.push({ product: productId, color , price: productPrice });
     }
   }
 
