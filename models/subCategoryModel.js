@@ -5,21 +5,21 @@ const subCategorySchema = new mongoose.Schema(
     name_nor: {
       type: String,
       trim: true,
-      unique: [true, "category must be unique"],
+      unique: [true, "subcategory must be unique"],
       minlength: [2, "too short subCategory name"],
       maxlength: [32, "too long subCategory name"],
     },
     name_dan: {
       type: String,
       trim: true,
-      unique: [true, "category must be unique"],
+      unique: [true, "subcategory must be unique"],
       minlength: [2, "too short subCategory name"],
       maxlength: [32, "too long subCategory name"],
     },
     name_swe: {
       type: String,
       trim: true,
-      unique: [true, "category must be unique"],
+      unique: [true, "subcategory must be unique"],
       minlength: [2, "too short subCategory name"],
       maxlength: [32, "too long subCategory name"],
     },
@@ -55,7 +55,6 @@ const subCategorySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-
 const setImageURL = (doc) => {
   //return image base url + iamge name
   if (doc.imageCover) {
@@ -87,10 +86,10 @@ subCategorySchema.pre(/^find/, function (next) {
   // this => query
   this.populate({
     path: "category",
-    select: "name_en name_ar -_id",
+    select: "name_nor name_dan name_swe -_id",
   });
   next();
 });
 
-const subCategory =  mongoose.model("subCategory", subCategorySchema);
+const subCategory = mongoose.model("subCategory", subCategorySchema);
 module.exports = subCategory;
