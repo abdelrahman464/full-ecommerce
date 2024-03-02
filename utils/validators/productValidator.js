@@ -6,44 +6,63 @@ const Brand = require("../../models/brandModel");
 const ApiError = require("../apiError");
 
 exports.createProductValidator = [
-  check("title_en")
+  check("title_nor")
     .notEmpty()
-    .withMessage("product english name required")
+    .withMessage("product norway name required")
     .isLength({ min: 3 })
-    .withMessage("product english name must be at least 3 chars"),
-  check("title_ar")
+    .withMessage("product norway name must be at least 3 chars"),
+  check("title_dan")
     .isLength({ min: 3 })
-    .withMessage("product arabic name must be at least 3 chars")
+    .withMessage("product danish name must be at least 3 chars")
     .notEmpty()
-    .withMessage("product arabic name required"),
-  check("shortDescription_en")
+    .withMessage("product danish name required"),
+  check("title_swe")
+    .isLength({ min: 3 })
+    .withMessage("product swedish name must be at least 3 chars")
     .notEmpty()
-    .withMessage("Product english description is required")
+    .withMessage("product swedish name required"),
+  check("shortDescription_nor")
+    .notEmpty()
+    .withMessage("Product norway description is required")
     .isLength({ min: 10 })
-    .withMessage("Too short Product english description")
+    .withMessage("Too short Product norway description")
     .isLength({ max: 300 })
-    .withMessage("Too long Product english description"),
-  check("shortDescription_ar")
+    .withMessage("Too long Product norway description"),
+  check("shortDescription_dan")
     .notEmpty()
-    .withMessage("Product arabic description is required")
+    .withMessage("Product danish description is required")
     .isLength({ min: 10 })
-    .withMessage("Too short Product arabic description")
+    .withMessage("Too short Product danish description")
     .isLength({ max: 300 })
-    .withMessage("Too long Product arabic description"),
-  check("description_en")
+    .withMessage("Too long Product danish description"),
+  check("shortDescription_swe")
     .notEmpty()
-    .withMessage("Product english description is required")
-    .isLength({ min: 20 })
-    .withMessage("Too short Product english description")
-    .isLength({ max: 1000 })
-    .withMessage("Too long Product english description"),
-  check("description_ar")
+    .withMessage("Product swedish description is required")
+    .isLength({ min: 10 })
+    .withMessage("Too short swedish arabic description")
+    .isLength({ max: 300 })
+    .withMessage("Too long swedish arabic description"),
+  check("description_nor")
     .notEmpty()
-    .withMessage("Product arabic description is required")
+    .withMessage("Product norway description is required")
     .isLength({ min: 20 })
-    .withMessage("Too short Product arabic description")
+    .withMessage("Too short Product norway description")
     .isLength({ max: 1000 })
-    .withMessage("Too long Product arabic description"),
+    .withMessage("Too long Product norway description"),
+  check("description_dan")
+    .notEmpty()
+    .withMessage("Product danish description is required")
+    .isLength({ min: 20 })
+    .withMessage("Too short Product danish description")
+    .isLength({ max: 1000 })
+    .withMessage("Too long Product danish description"),
+  check("description_swe")
+    .notEmpty()
+    .withMessage("Product swedish description is required")
+    .isLength({ min: 20 })
+    .withMessage("Too short Product swedish description")
+    .isLength({ max: 1000 })
+    .withMessage("Too long Product swedish description"),
   check("quantity")
     .notEmpty()
     .withMessage("Product quantity is required")
@@ -75,7 +94,7 @@ exports.createProductValidator = [
     .optional()
     .isArray()
     .withMessage("availableColors should be array of string"),
-  
+
   check("imageCover").notEmpty().withMessage("Product imageCover is required"),
   check("images")
     .optional()
@@ -169,38 +188,54 @@ exports.getProductValidator = [
 
 exports.updateProductValidator = [
   check("id").isMongoId().withMessage("Invalid ID format"),
-  check("title_en")
+  check("title_nor")
     .optional()
     .isLength({ min: 3 })
-    .withMessage("product english name must be at least 3 chars"),
-  check("title_ar")
+    .withMessage("product norway name must be at least 3 chars"),
+  check("title_dan")
     .isLength({ min: 3 })
-    .withMessage("product arabic name must be at least 3 chars")
+    .withMessage("product danish name must be at least 3 chars")
     .optional(),
-  check("shortDescription_en")
+  check("title_swe")
+    .isLength({ min: 3 })
+    .withMessage("product swedish name must be at least 3 chars")
+    .optional(),
+  check("shortDescription_nor")
     .optional()
     .isLength({ min: 10 })
-    .withMessage("Too short Product english description")
+    .withMessage("Too short Product norway description")
     .isLength({ max: 300 })
-    .withMessage("Too long Product english description"),
-  check("shortDescription_ar")
+    .withMessage("Too long Product norway description"),
+  check("shortDescription_dan")
     .optional()
     .isLength({ min: 10 })
-    .withMessage("Too short Product arabic description")
+    .withMessage("Too short Product danish description")
     .isLength({ max: 300 })
-    .withMessage("Too long Product arabic description"),
-  check("description_en")
+    .withMessage("Too long Product danish description"),
+  check("shortDescription_swe")
+    .optional()
+    .isLength({ min: 10 })
+    .withMessage("Too short Product swedish description")
+    .isLength({ max: 300 })
+    .withMessage("Too long Product swedish description"),
+  check("description_nor")
     .optional()
     .isLength({ min: 20 })
-    .withMessage("Too short Product english description")
+    .withMessage("Too short Product norway description")
     .isLength({ max: 1000 })
-    .withMessage("Too long Product english description"),
-  check("description_ar")
+    .withMessage("Too long Product norway description"),
+  check("description_dan")
     .optional()
     .isLength({ min: 20 })
-    .withMessage("Too short Product arabic description")
+    .withMessage("Too short Product danish description")
     .isLength({ max: 1000 })
-    .withMessage("Too long Product arabic description"),
+    .withMessage("Too long Product danish description"),
+  check("description_swe")
+    .optional()
+    .isLength({ min: 20 })
+    .withMessage("Too short Product swedish description")
+    .isLength({ max: 1000 })
+    .withMessage("Too long Product swedish description"),
   check("quantity")
     .optional()
     .isNumeric()
@@ -230,7 +265,6 @@ exports.updateProductValidator = [
     .optional()
     .isArray()
     .withMessage("availableColors should be array of string"),
-  
 
   check("imageCover").optional(),
   check("images")
@@ -251,6 +285,18 @@ exports.updateProductValidator = [
         }
       })
     ),
+  check("highlights_nor")
+    .optional()
+    .isArray()
+    .withMessage("highlights norway should be array of string"),
+  check("highlights_dan")
+    .optional()
+    .isArray()
+    .withMessage("highlights danish should be array of string"),
+  check("highlights_swe")
+    .optional()
+    .isArray()
+    .withMessage("highlights swedish should be array of string"),
   check("subCategories")
     .optional()
     .isArray()

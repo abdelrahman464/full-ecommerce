@@ -3,14 +3,21 @@ const mongoose = require("mongoose");
 //1- create schema
 const brnadSchema = mongoose.Schema(
   {
-    name_ar: {
+    name_nor: {
       type: String,
       required: [true, "category required"],
       unique: [true, "category must be unique"],
       minlength: [3, "too short category name"],
       maxlength: [32, "too long category name"],
     },
-    name_en: {
+    name_dan: {
+      type: String,
+      required: [true, "category required"],
+      unique: [true, "category must be unique"],
+      minlength: [3, "too short category name"],
+      maxlength: [32, "too long category name"],
+    },
+    name_swe: {
       type: String,
       required: [true, "category required"],
       unique: [true, "category must be unique"],
@@ -39,8 +46,6 @@ brnadSchema.post("init", (doc) => {
 brnadSchema.post("save", (doc) => {
   setImageURL(doc);
 });
-
-
 
 //2- create model
 const BrandModel = mongoose.model("Brand", brnadSchema);

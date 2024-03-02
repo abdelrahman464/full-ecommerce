@@ -2,14 +2,21 @@ const mongoose = require("mongoose");
 
 const subCategorySchema = new mongoose.Schema(
   {
-    name_ar: {
+    name_nor: {
       type: String,
       trim: true,
       unique: [true, "category must be unique"],
       minlength: [2, "too short subCategory name"],
       maxlength: [32, "too long subCategory name"],
     },
-    name_en: {
+    name_dan: {
+      type: String,
+      trim: true,
+      unique: [true, "category must be unique"],
+      minlength: [2, "too short subCategory name"],
+      maxlength: [32, "too long subCategory name"],
+    },
+    name_swe: {
       type: String,
       trim: true,
       unique: [true, "category must be unique"],
@@ -21,13 +28,19 @@ const subCategorySchema = new mongoose.Schema(
       ref: "Category",
       required: [true, "subCategory must be belong to parent category"],
     },
-    description_ar: {
+    description_nor: {
       type: String,
       required: [true, "subCategory description is required"],
       trim: true,
       minlength: [20, "Too short subCategory description"],
     },
-    description_en: {
+    description_dan: {
+      type: String,
+      required: [true, "subCategory description is required"],
+      trim: true,
+      minlength: [20, "Too short subCategory description"],
+    },
+    description_swe: {
       type: String,
       required: [true, "subCategory description is required"],
       trim: true,

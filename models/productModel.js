@@ -3,44 +3,64 @@ const mongoose = require("mongoose");
 const productSchema = new mongoose.Schema(
   {
     
-    title_ar: {
+    title_nor: {
       type: String,
       required: true,
       trim: true,
       minlength: [3, "Too short product title"],
       maxlength: [100, "too Shot product title"],
     },
-    title_en: {
+    title_dan: {
       type: String,
       required: true,
       trim: true,
       minlength: [3, "Too short product title"],
       maxlength: [100, "too Shot product title"],
     },
-    shortDescription_ar: {
+    title_swe: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: [3, "Too short product title"],
+      maxlength: [100, "too Shot product title"],
+    },
+    shortDescription_nor: {
       type: String,
       required: [true, "Product description is required"],
       trim: true,
       minlength: [20, "Too short Product description"],
     },
-    shortDescription_en: {
+    shortDescription_dan: {
       type: String,
       trim: true,
       minlength: [20, "Too short Product description"],
     },
-    description_ar: {
+    shortDescription_swe: {
       type: String,
       trim: true,
       minlength: [20, "Too short Product description"],
     },
-    description_en: {
+    description_nor: {
       type: String,
-      required: [true, "Product description is required"],
+      required: [true, "category description is required"],
       trim: true,
-      minlength: [20, "Too short Product description"],
+      minlength: [20, "Too short category description"],
     },
-    highlights_ar:[String],
-    highlights_en:[String],
+    description_dan: {
+      type: String,
+      required: [true, "category description is required"],
+      trim: true,
+      minlength: [20, "Too short category description"],
+    },
+    description_swe: {
+      type: String,
+      required: [true, "category description is required"],
+      trim: true,
+      minlength: [20, "Too short category description"],
+    },
+    highlights_nor:[String],
+    highlights_dan:[String],
+    highlights_swe:[String],
     quantity: {
       type: Number,
       required: [true, "Product quantity is required"],

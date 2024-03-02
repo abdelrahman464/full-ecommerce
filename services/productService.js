@@ -29,47 +29,56 @@ exports.convertToArray = (req, res, next) => {
       req.body.colors = [req.body.colors];
     }
   }
-  if (req.body.highlights_ar) {
+  if (req.body.highlights_nor) {
     // If it's not an array, convert it to an array
-    if (!Array.isArray(req.body.highlights_ar)) {
-      req.body.highlights_ar = [req.body.highlights_ar];
+    if (!Array.isArray(req.body.highlights_nor)) {
+      req.body.highlights_nor = [req.body.highlights_nor];
     }
   }
-  if (req.body.highlights_en) {
+  if (req.body.highlights_dan) {
     // If it's not an array, convert it to an array
-    if (!Array.isArray(req.body.highlights_en)) {
-      req.body.highlights_en = [req.body.highlights_en];
+    if (!Array.isArray(req.body.highlights_dan)) {
+      req.body.highlights_dan = [req.body.highlights_dan];
+    }
+  }
+  if (req.body.highlights_swe) {
+    // If it's not an array, convert it to an array
+    if (!Array.isArray(req.body.highlights_swe)) {
+      req.body.highlights_swe = [req.body.highlights_swe];
     }
   }
   next();
 };
 exports.resizeProductImages = asyncHandler(async (req, res, next) => {
   // Image processing for imageCover
-  if (req.files.imageCover && req.files.imageCover[0].mimetype.startsWith('image/')) {
+  if (
+    req.files.imageCover &&
+    req.files.imageCover[0].mimetype.startsWith("image/")
+  ) {
     const imageCoverFileName = `product-${uuidv4()}-${Date.now()}-cover.webp`;
 
     await sharp(req.files.imageCover[0].buffer)
-      .toFormat('webp') // Convert to WebP
+      .toFormat("webp") // Convert to WebP
       .webp({ quality: 90 })
       .toFile(`uploads/products/${imageCoverFileName}`);
 
     // Save imageCover file name in the request body for database saving
     req.body.imageCover = imageCoverFileName;
   } else if (req.files.imageCover) {
-    return next(new ApiError('Image cover is not an image file', 400));
+    return next(new ApiError("Image cover is not an image file", 400));
   }
 
   // Image processing for images
   if (req.files.images) {
     const imageProcessingPromises = req.files.images.map(async (img, index) => {
-      if (!img.mimetype.startsWith('image/')) {
+      if (!img.mimetype.startsWith("image/")) {
         throw new ApiError(`File ${index + 1} is not an image file.`, 400);
       }
 
       const imageName = `product-${uuidv4()}-${Date.now()}-${index + 1}.webp`;
 
       await sharp(img.buffer)
-        .toFormat('webp') // Convert to WebP
+        .toFormat("webp") // Convert to WebP
         .webp({ quality: 90 })
         .toFile(`uploads/products/${imageName}`);
 

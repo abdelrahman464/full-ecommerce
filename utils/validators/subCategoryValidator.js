@@ -13,20 +13,27 @@ exports.getsubCategoryValidator = [
   validatorMiddleware,
 ];
 exports.createSupCategroyValidator = [
-  check("name_en")
+  check("name_nor")
     .notEmpty()
     .withMessage("subCategory required")
     .isLength({ min: 3 })
     .withMessage("too short subCateogry name")
     .isLength({ max: 32 })
     .withMessage("too long subCateogry name"),
-  check("name_ar")
+  check("name_dan")
     .notEmpty()
     .withMessage("subCategory required")
     .isLength({ min: 2 })
-    .withMessage("too short subCateogry arabic name ")
+    .withMessage("too short subCateogry danish name ")
     .isLength({ max: 32 })
-    .withMessage("too long subCateogry arabic name"),
+    .withMessage("too long subCateogry danish name"),
+  check("name_swe")
+    .notEmpty()
+    .withMessage("subCategory required")
+    .isLength({ min: 2 })
+    .withMessage("too short subCateogry swedish name")
+    .isLength({ max: 32 })
+    .withMessage("too long subCateogry swedish name"),
   check("category")
     .notEmpty()
     .withMessage("subCateogry must be belong to category")
@@ -41,21 +48,30 @@ exports.createSupCategroyValidator = [
         }
       })
     ),
-    check("description_en")
+  check("description_nor")
     .notEmpty()
-    .withMessage("subCateogry english description is required")
+    .withMessage("subCateogry norway description is required")
     .isLength({ min: 20 })
-    .withMessage("Too short ProsubCateogryduct english description")
+    .withMessage("Too short ProsubCateogryduct norway description")
     .isLength({ max: 2000 })
-    .withMessage("Too long subCateogry english description"),
-  check("description_ar")
+    .withMessage("Too long subCateogry norway description"),
+  check("description_dan")
     .notEmpty()
-    .withMessage("subCateogry arabic description is required")
+    .withMessage("subCateogry danish description is required")
     .isLength({ min: 20 })
-    .withMessage("Too short subCateogry arabic description")
+    .withMessage("Too short subCateogry danish description")
     .isLength({ max: 2000 })
-    .withMessage("Too long subCateogry arabic description"),
-  check("imageCover").notEmpty().withMessage("subCateogry imageCover is required"),
+    .withMessage("Too long subCateogry danish description"),
+  check("description_swe")
+    .notEmpty()
+    .withMessage("subCateogry danish description is required")
+    .isLength({ min: 20 })
+    .withMessage("Too short subCateogry danish description")
+    .isLength({ max: 2000 })
+    .withMessage("Too long subCateogry danish description"),
+  check("imageCover")
+    .notEmpty()
+    .withMessage("subCateogry imageCover is required"),
   check("images")
     .optional()
     .isArray()
@@ -82,30 +98,42 @@ exports.updateCategroyValidator = [
         }
       })
     ),
-  check("name_en")
+  check("name_nor")
     .optional()
     .isLength({ min: 3 })
     .withMessage("too short subCateogry name")
     .isLength({ max: 32 })
     .withMessage("too long subCateogry name"),
-  check("name_ar")
+  check("name_den")
     .optional()
     .isLength({ min: 2 })
-    .withMessage("too short subCateogry arabic name ")
+    .withMessage("too short subCateogry danish name ")
     .isLength({ max: 32 })
-    .withMessage("too long subCateogry arabic name"),
-  check("description_en")
+    .withMessage("too long subCateogry danish name"),
+  check("name_swe")
+    .optional()
+    .isLength({ min: 2 })
+    .withMessage("too short subCateogry swedish name ")
+    .isLength({ max: 32 })
+    .withMessage("too long subCateogry swedish name"),
+  check("description_nor")
     .optional()
     .isLength({ min: 20 })
-    .withMessage("Too short subCateogry english description")
+    .withMessage("Too short subCateogry norway description")
     .isLength({ max: 2000 })
-    .withMessage("Too long subCateogry english description"),
-  check("description_ar")
+    .withMessage("Too long subCateogry norway description"),
+  check("description_dan")
     .optional()
     .isLength({ min: 20 })
-    .withMessage("Too short subCateogry arabic description")
+    .withMessage("Too short subCateogry danish description")
     .isLength({ max: 2000 })
-    .withMessage("Too long subCateogry arabic description"),
+    .withMessage("Too long subCateogry danish description"),
+  check("description_swe")
+    .optional()
+    .isLength({ min: 20 })
+    .withMessage("Too short subCateogry swedish description")
+    .isLength({ max: 2000 })
+    .withMessage("Too long subCateogry swedish description"),
   validatorMiddleware,
 ];
 exports.deleteCategroyValidator = [
