@@ -7,9 +7,6 @@ const {
   deleteSubCategory,
   setCategoryIdToBody,
   createFilterObj,
-  uploadSubCategoryImage,
-  resizeImage,
-  getSubWithType
 } = require("../services/subCategoryService");
 const authServices = require("../services/authServices");
 const {
@@ -23,8 +20,6 @@ const {
 //ex: we need to access {categoryId} from category router
 const router = express.Router({ mergeParams: true });
 
-router.get('/getWithType/:type',getSubWithType)
-
 router
   .route("/")
   //filter subCategories in specefic category by categoryId
@@ -37,7 +32,6 @@ router
     authServices.protect,
     authServices.allowedTo("admin", "manager"),
     setCategoryIdToBody,
-    uploadSubCategoryImage,resizeImage,
     createSupCategroyValidator,
     createSubCategory
   );
@@ -47,7 +41,6 @@ router
   .put(
     authServices.protect,
     authServices.allowedTo("admin", "manager"),
-    uploadSubCategoryImage,resizeImage,
     updateCategroyValidator,
     updateSubCategory
   )

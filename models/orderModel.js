@@ -14,7 +14,6 @@ const orderSchema = new mongoose.Schema(
           ref: "Product",
         },
         quantity: Number,
-        color: String,
         price: Number,
       },
     ],

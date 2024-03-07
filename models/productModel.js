@@ -24,22 +24,6 @@ const productSchema = new mongoose.Schema(
       minlength: [3, "Too short product title"],
       maxlength: [100, "too Shot product title"],
     },
-    shortDescription_nor: {
-      type: String,
-      required: [true, "Product description is required"],
-      trim: true,
-      minlength: [20, "Too short Product description"],
-    },
-    shortDescription_dan: {
-      type: String,
-      trim: true,
-      minlength: [20, "Too short Product description"],
-    },
-    shortDescription_swe: {
-      type: String,
-      trim: true,
-      minlength: [20, "Too short Product description"],
-    },
     description_nor: {
       type: String,
       required: [true, "category description is required"],
@@ -58,9 +42,6 @@ const productSchema = new mongoose.Schema(
       trim: true,
       minlength: [20, "Too short category description"],
     },
-    highlights_nor:[String],
-    highlights_dan:[String],
-    highlights_swe:[String],
     quantity: {
       type: Number,
       required: [true, "Product quantity is required"],

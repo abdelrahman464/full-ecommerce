@@ -18,15 +18,7 @@ exports.addProductToCartValidator = [
         }
       })
     ),
-  check("color")
-    .optional()
-    .custom(async (val, { req }) => {
-      const product = await Product.findById(req.body.productId);
-      if (!product.colors.includes(val)) {
-        throw new Error("Invalid color selected for this item");
-      }
-      return true;
-    }),
+  
 
   validatorMiddleware,
 ];

@@ -23,30 +23,6 @@ exports.convertToArray = (req, res, next) => {
       req.body.subCategories = [req.body.subCategories];
     }
   }
-  if (req.body.colors) {
-    // If it's not an array, convert it to an array
-    if (!Array.isArray(req.body.colors)) {
-      req.body.colors = [req.body.colors];
-    }
-  }
-  if (req.body.highlights_nor) {
-    // If it's not an array, convert it to an array
-    if (!Array.isArray(req.body.highlights_nor)) {
-      req.body.highlights_nor = [req.body.highlights_nor];
-    }
-  }
-  if (req.body.highlights_dan) {
-    // If it's not an array, convert it to an array
-    if (!Array.isArray(req.body.highlights_dan)) {
-      req.body.highlights_dan = [req.body.highlights_dan];
-    }
-  }
-  if (req.body.highlights_swe) {
-    // If it's not an array, convert it to an array
-    if (!Array.isArray(req.body.highlights_swe)) {
-      req.body.highlights_swe = [req.body.highlights_swe];
-    }
-  }
   next();
 };
 exports.resizeProductImages = asyncHandler(async (req, res, next) => {

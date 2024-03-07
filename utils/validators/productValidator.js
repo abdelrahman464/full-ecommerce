@@ -21,27 +21,6 @@ exports.createProductValidator = [
     .withMessage("product swedish name must be at least 3 chars")
     .notEmpty()
     .withMessage("product swedish name required"),
-  check("shortDescription_nor")
-    .notEmpty()
-    .withMessage("Product norway description is required")
-    .isLength({ min: 10 })
-    .withMessage("Too short Product norway description")
-    .isLength({ max: 300 })
-    .withMessage("Too long Product norway description"),
-  check("shortDescription_dan")
-    .notEmpty()
-    .withMessage("Product danish description is required")
-    .isLength({ min: 10 })
-    .withMessage("Too short Product danish description")
-    .isLength({ max: 300 })
-    .withMessage("Too long Product danish description"),
-  check("shortDescription_swe")
-    .notEmpty()
-    .withMessage("Product swedish description is required")
-    .isLength({ min: 10 })
-    .withMessage("Too short swedish arabic description")
-    .isLength({ max: 300 })
-    .withMessage("Too long swedish arabic description"),
   check("description_nor")
     .notEmpty()
     .withMessage("Product norway description is required")
@@ -90,11 +69,6 @@ exports.createProductValidator = [
       }
       return true;
     }),
-  check("colors")
-    .optional()
-    .isArray()
-    .withMessage("availableColors should be array of string"),
-
   check("imageCover").notEmpty().withMessage("Product imageCover is required"),
   check("images")
     .optional()
@@ -200,24 +174,6 @@ exports.updateProductValidator = [
     .isLength({ min: 3 })
     .withMessage("product swedish name must be at least 3 chars")
     .optional(),
-  check("shortDescription_nor")
-    .optional()
-    .isLength({ min: 10 })
-    .withMessage("Too short Product norway description")
-    .isLength({ max: 300 })
-    .withMessage("Too long Product norway description"),
-  check("shortDescription_dan")
-    .optional()
-    .isLength({ min: 10 })
-    .withMessage("Too short Product danish description")
-    .isLength({ max: 300 })
-    .withMessage("Too long Product danish description"),
-  check("shortDescription_swe")
-    .optional()
-    .isLength({ min: 10 })
-    .withMessage("Too short Product swedish description")
-    .isLength({ max: 300 })
-    .withMessage("Too long Product swedish description"),
   check("description_nor")
     .optional()
     .isLength({ min: 20 })
@@ -261,10 +217,7 @@ exports.updateProductValidator = [
       }
       return true;
     }),
-  check("colors")
-    .optional()
-    .isArray()
-    .withMessage("availableColors should be array of string"),
+ 
 
   check("imageCover").optional(),
   check("images")
@@ -285,18 +238,7 @@ exports.updateProductValidator = [
         }
       })
     ),
-  check("highlights_nor")
-    .optional()
-    .isArray()
-    .withMessage("highlights norway should be array of string"),
-  check("highlights_dan")
-    .optional()
-    .isArray()
-    .withMessage("highlights danish should be array of string"),
-  check("highlights_swe")
-    .optional()
-    .isArray()
-    .withMessage("highlights swedish should be array of string"),
+  
   check("subCategories")
     .optional()
     .isArray()

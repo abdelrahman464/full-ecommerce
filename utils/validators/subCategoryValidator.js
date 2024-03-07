@@ -48,34 +48,7 @@ exports.createSupCategroyValidator = [
         }
       })
     ),
-  check("description_nor")
-    .notEmpty()
-    .withMessage("subCateogry norway description is required")
-    .isLength({ min: 20 })
-    .withMessage("Too short ProsubCateogryduct norway description")
-    .isLength({ max: 2000 })
-    .withMessage("Too long subCateogry norway description"),
-  check("description_dan")
-    .notEmpty()
-    .withMessage("subCateogry danish description is required")
-    .isLength({ min: 20 })
-    .withMessage("Too short subCateogry danish description")
-    .isLength({ max: 2000 })
-    .withMessage("Too long subCateogry danish description"),
-  check("description_swe")
-    .notEmpty()
-    .withMessage("subCateogry danish description is required")
-    .isLength({ min: 20 })
-    .withMessage("Too short subCateogry danish description")
-    .isLength({ max: 2000 })
-    .withMessage("Too long subCateogry danish description"),
-  check("imageCover")
-    .notEmpty()
-    .withMessage("subCateogry imageCover is required"),
-  check("images")
-    .optional()
-    .isArray()
-    .withMessage("images should be array of string"),
+
   validatorMiddleware,
 ];
 exports.updateCategroyValidator = [
@@ -116,24 +89,7 @@ exports.updateCategroyValidator = [
     .withMessage("too short subCateogry swedish name ")
     .isLength({ max: 32 })
     .withMessage("too long subCateogry swedish name"),
-  check("description_nor")
-    .optional()
-    .isLength({ min: 20 })
-    .withMessage("Too short subCateogry norway description")
-    .isLength({ max: 2000 })
-    .withMessage("Too long subCateogry norway description"),
-  check("description_dan")
-    .optional()
-    .isLength({ min: 20 })
-    .withMessage("Too short subCateogry danish description")
-    .isLength({ max: 2000 })
-    .withMessage("Too long subCateogry danish description"),
-  check("description_swe")
-    .optional()
-    .isLength({ min: 20 })
-    .withMessage("Too short subCateogry swedish description")
-    .isLength({ max: 2000 })
-    .withMessage("Too long subCateogry swedish description"),
+
   validatorMiddleware,
 ];
 exports.deleteCategroyValidator = [
