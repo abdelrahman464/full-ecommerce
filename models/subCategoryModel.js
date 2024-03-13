@@ -5,21 +5,21 @@ const subCategorySchema = new mongoose.Schema(
     name_nor: {
       type: String,
       trim: true,
-      unique: [true, "subcategory must be unique"],
+     
       minlength: [2, "too short subCategory name"],
       maxlength: [32, "too long subCategory name"],
     },
     name_dan: {
       type: String,
       trim: true,
-      unique: [true, "subcategory must be unique"],
+
       minlength: [2, "too short subCategory name"],
       maxlength: [32, "too long subCategory name"],
     },
     name_swe: {
       type: String,
       trim: true,
-      unique: [true, "subcategory must be unique"],
+
       minlength: [2, "too short subCategory name"],
       maxlength: [32, "too long subCategory name"],
     },
